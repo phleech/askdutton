@@ -5,6 +5,13 @@ use App\MessageService;
 use Carbon\Carbon;
 
 $messageService = new MessageService(__DIR__.'/../messages.json');
+
+$message = $messageService->getMessage();
+
+if ($messageService->isImage($message)) {
+    $message = "<img src='$message' />";
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -114,7 +121,7 @@ $messageService = new MessageService(__DIR__.'/../messages.json');
                 <div class="row">
                     <div class="image"></div>
                     <div class="message">
-                        <p><?= $messageService->getMessage(); ?></p>
+                        <p><?= $message; ?></p>
                     </div>
                 </div>
             </div>
