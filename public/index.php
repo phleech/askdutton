@@ -21,8 +21,13 @@ $messageService = new MessageService(__DIR__.'/../messages.json');
                 margin: 0;
             }
 
+            @font-face {
+                font-family: 'OpenSans';
+                src: url('OpenSans-Regular.ttf');
+            }
+
             p, a {
-                font-family: "Segoe UI";
+                font-family: 'OpenSans';
                 font-weight: 400;
             }
 
