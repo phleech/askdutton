@@ -93,6 +93,9 @@ if ($messageService->isImage($message)) {
                     font-size: 14px;
                     padding: 2px;
                     margin: 0;
+                    img {
+                        max-width: 100%;
+                    }
                 }
             }
 
