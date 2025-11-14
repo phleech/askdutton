@@ -19,7 +19,7 @@ if ($messageService->isImage($message)) {
         <title>Scott will know!</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <link rel="icon" type="image/x-icon" href="profile.png">
-        <style>
+        <style type="text/css">
             html, body {
                 height: 100%;
             }
