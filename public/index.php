@@ -6,7 +6,21 @@ use Carbon\Carbon;
 
 $messageService = new MessageService(__DIR__.'/../messages.json');
 
-$message = $messageService->getMessage();
+if (! empty($_GET['m'])) {
+    if (filter_var($_GET['m'], FILTER_VALIDATE_INT) === false) {
+        header('Location: /');
+        exit;
+    }
+
+    if (empty($message = $messageService->getMessage($_GET['m']))) {
+        header('Location: /');
+        exit;
+    }
+}
+
+if (empty($message)) {
+    $message = $messageService->getRandomMessage();
+}
 
 if ($messageService->isImage($message)) {
     $message = "<img src='$message' />";

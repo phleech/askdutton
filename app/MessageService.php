@@ -37,9 +37,18 @@ class MessageService
         $this->messages = $messages;
     }
 
-    public function getMessage(): string
+    public function getRandomMessage(): string
     {
         return $this->messages[array_rand($this->messages)];
+    }
+
+    public function getMessage(int $index): string
+    {
+        if (! isset($this->messages[$index])) {
+            return '';
+        }
+
+        return $this->messages[$index];
     }
 
     public function isImage(string $message): bool

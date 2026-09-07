@@ -42,7 +42,28 @@ final class MessageServiceTest extends TestCase
         $messageService = new MessageService($filename);
     }
 
-    public function test_get_message_returns_a_message(): void
+    public function test_get_message_returns_correct_message_if_the_supplied_index_is_valid(): void
+    {
+        $tempJsonFileHandler = tmpfile();
+        fwrite($tempJsonFileHandler, '["example message 1", "example message 2", "example message 3"]');
+        $filename = stream_get_meta_data($tempJsonFileHandler)['uri'];
+
+        $messageService = new MessageService($filename);
+
+        $this->assertEquals('example message 3', $messageService->getMessage(2));
+    }
+
+    public function test_get_message_returns_an_empty_message_if_the_supplied_index_is_invalid(): void
+    {
+        $tempJsonFileHandler = tmpfile();
+        fwrite($tempJsonFileHandler, '["example message"]');
+        $filename = stream_get_meta_data($tempJsonFileHandler)['uri'];
+
+        $messageService = new MessageService($filename);
+        $this->assertEquals('', $messageService->getMessage(2));
+    }
+
+    public function test_get_random_message_returns_a_message(): void
     {
         $tempJsonFileHandler = tmpfile();
         fwrite($tempJsonFileHandler, '["example message"]');
@@ -50,7 +71,7 @@ final class MessageServiceTest extends TestCase
 
         $messageService = new MessageService($filename);
 
-        $this->assertEquals('example message', $messageService->getMessage());
+        $this->assertEquals('example message', $messageService->getRandomMessage());
     }
 
     #[DataProvider('isImageDataProvider')]
@@ -61,7 +82,7 @@ final class MessageServiceTest extends TestCase
         $filename = stream_get_meta_data($tempJsonFileHandler)['uri'];
 
         $messageService = new MessageService($filename);
-        $message = $messageService->getMessage();
+        $message = $messageService->getRandomMessage();
 
         $this->assertEquals($expected, $messageService->isImage($message));
     }
