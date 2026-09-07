@@ -14,7 +14,7 @@ RUN docker-php-ext-configure intl \
 	&& docker-php-ext-install intl \
 	&& docker-php-ext-install zip
 
-ARG NEWRELIC_VERSION=11.5.0.18
+ARG NEWRELIC_VERSION=12.9.0.38
 
 RUN curl -L "https://download.newrelic.com/php_agent/archive/$NEWRELIC_VERSION/newrelic-php5-$NEWRELIC_VERSION-linux.tar.gz" | tar -C /tmp -zx
 
