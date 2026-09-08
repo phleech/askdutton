@@ -22,10 +22,6 @@ if (empty($message)) {
     $message = $messageService->getRandomMessage();
 }
 
-if ($messageService->isImage($message)) {
-    $message = "<img src='$message' />";
-}
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -113,13 +109,22 @@ if ($messageService->isImage($message)) {
                 }
             }
 
-            div.github {
-                text-align: right;
-                padding: 10px;
-                a {
-                    font-size: 14px;
-                    color: rgb(97, 97, 97);
-                    text-decoration: none;
+            div.links {
+                display: flex;
+                div {
+                    flex: 0 50%;
+                    padding: 10px;
+                    a {
+                        font-size: 14px;
+                        color: rgb(97, 97, 97);
+                        text-decoration: none;
+                    }
+                    &.share {
+                        text-align: left;
+                    }
+                    &.github {
+                        text-align: right;
+                    }
                 }
             }
         </style>
@@ -138,12 +143,17 @@ if ($messageService->isImage($message)) {
                 <div class="row">
                     <div class="image"></div>
                     <div class="message">
-                        <p><?= $message; ?></p>
+                        <p><?= $message->isImage() ? "<img src='".$message->body."' />" : $message->body ?></p>
                     </div>
                 </div>
             </div>
-            <div class="github">
-                <a href="https://github.com/phleech/askdutton">Got a better response?</a>
+            <div class="links">
+                <div class="share">
+                    <a href="https://www.askdutton.co.uk/?m=<?= $message->index ?>">Share this message</a>
+                </div>
+                <div class="github">
+                    <a href="https://github.com/phleech/askdutton">Got a better response?</a>
+                </div>
             </div>
         </div>
     </body>

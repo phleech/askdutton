@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Models\Message;
 use Exception;
-use finfo;
 
 class MessageService
 {
     private array $messages = [];
 
-    private $finfo;
-
     public function __construct(
         string $jsonFileLocation
     ) {
-        $this->finfo = new finfo(FILEINFO_MIME);
 
         if (! file_exists($jsonFileLocation)) {
             throw new Exception('Messages file does not exist');
@@ -37,28 +34,19 @@ class MessageService
         $this->messages = $messages;
     }
 
-    public function getRandomMessage(): string
+    public function getRandomMessage(): Message
     {
-        return $this->messages[array_rand($this->messages)];
+        $index = array_rand($this->messages);
+
+        return new Message($index, $this->messages[$index]);
     }
 
-    public function getMessage(int $index): string
+    public function getMessage(int $index): ?Message
     {
         if (! isset($this->messages[$index])) {
-            return '';
+            return null;
         }
 
-        return $this->messages[$index];
-    }
-
-    public function isImage(string $message): bool
-    {
-        if (filter_var($message, FILTER_VALIDATE_URL) === false) {
-            return false;
-        }
-
-        $mimeType = $this->finfo->buffer(file_get_contents($message));
-
-        return str_starts_with($mimeType, 'image');
+        return new Message($index, $this->messages[$index]);
     }
 }
