@@ -8,6 +8,5 @@ Want to add a message?
 
 1. Clone this repo.
 2. Add your message to the `messages.json` file.
-3. Run `vendor/bin/phpunit` and confirm tests pass.
-4. Run `vendor/bin/pint` and confirm no code style issues.
+3. Run `qa.sh`.
 4. Raise PR.
